@@ -21,7 +21,9 @@
 }
 
 .button {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background: none;
   font-size: 32px;
   padding-left: 12px;
