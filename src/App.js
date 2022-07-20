@@ -1,23 +1,26 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "./features/user/userSlice";
-import HomePage from "./HomePage";
+import { useDispatch } from "react-redux";
+import { setCurrentUser, setUserTasks } from "./features/user/userSlice";
+import HomePage from "./components/HomePage";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
+  getUserTasks,
 } from "./utils/firebaseUtils";
 
 function App() {
-  const { currentUser } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
+    const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {
         createUserDocumentFromAuth(user);
         dispatch(setCurrentUser(user?.uid));
+        const tasks = await getUserTasks();
+        dispatch(setUserTasks(tasks));
       } else {
         dispatch(setCurrentUser(null));
+        dispatch(setUserTasks([]));
       }
     });
     return unsubscribe;
@@ -25,7 +28,6 @@ function App() {
 
   return (
     <div className="App">
-      {currentUser}
       <HomePage />
     </div>
   );

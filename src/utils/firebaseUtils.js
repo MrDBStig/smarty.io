@@ -8,7 +8,17 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 // Getting config values
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -69,13 +79,60 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   if (!userSnapshot.exists()) {
     const { email } = userAuth;
     try {
-      await setDoc(userDocRef, { email, tasks: [] });
+      await setDoc(userDocRef, { email });
     } catch (e) {
       console.error(`Error creating the user ${e}`);
     }
   }
 
   return userSnapshot;
+};
+
+// Operations with user tasks
+export const getUserTasks = async () => {
+  const userAuth = auth.currentUser;
+  if (!userAuth) return;
+
+  const tasksDocRef = doc(db, "users", userAuth.uid);
+  const tasksSnapshot = await getDocs(collection(tasksDocRef, "tasks"));
+
+  return Array.from(tasksSnapshot.docs, (doc) => {
+    const { id } = doc;
+    const {
+      task: { name, done },
+    } = doc.data();
+    return { id, name, done };
+  });
+};
+
+export const addUserTask = async (task) => {
+  const userAuth = auth.currentUser;
+  if (!userAuth) return;
+
+  const tasksDocRef = doc(db, "users", userAuth.uid);
+  await addDoc(collection(tasksDocRef, "tasks"), { task });
+
+  return await getUserTasks();
+};
+
+export const updateUserTask = async (task) => {
+  const userAuth = auth.currentUser;
+  if (!userAuth) return;
+
+  const tasksDocRef = doc(db, `users/${userAuth.uid}/tasks/${task.id}`);
+  await updateDoc(tasksDocRef, { task });
+
+  return await getUserTasks();
+};
+
+export const deleteUserTask = async (task) => {
+  const userAuth = auth.currentUser;
+  if (!userAuth) return;
+
+  const tasksDocRef = doc(db, `users/${userAuth.uid}/tasks/${task.id}`);
+  await deleteDoc(tasksDocRef, { task });
+
+  return await getUserTasks();
 };
 
 // Set up user auth observer
