@@ -3,20 +3,12 @@ import { useSelector } from "react-redux";
 import TaskItem from "./TaskItem";
 
 const TaskList = () => {
-  const { tasks, currentUser } = useSelector((store) => store.user);
-
-  if (!currentUser) {
-    return (
-      <>
-        <h2>Sign in to start</h2>
-      </>
-    );
-  }
+  const { tasks } = useSelector((store) => store.user);
 
   return (
     <>
       {tasks.length !== 0 ? (
-        <ul>
+        <ul className="task-list">
           {tasks.map((task) => (
             <TaskItem key={task.id} {...task} />
           ))}

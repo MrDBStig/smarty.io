@@ -16,6 +16,7 @@ const TaskForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!name) return;
     const response = await addUserTask({ name, done: false });
     dispatch(setUserTasks(response));
 
@@ -23,9 +24,18 @@ const TaskForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" id="name" onChange={handleNameChange} />
-      <button type="submit">Add task</button>
+    <form className="task-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Add your task"
+        className="task-form-input"
+        onChange={handleNameChange}
+      />
+      <button className="task-form-btn blue-btn" type="submit">
+        Add task
+      </button>
     </form>
   );
 };

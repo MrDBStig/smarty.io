@@ -1,46 +1,56 @@
-import { signInWithGooglePopup, signOutUser } from "../utils/firebaseUtils";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { signOutUser } from "../utils/firebaseUtils";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
+import Modal from "./Modal";
 
 const HomePage = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const [isRegistered, setIsRegistered] = useState(true);
+  const [isHidden, setIsHidden] = useState(true);
+
+  const { currentUser } = useSelector((store) => store.user);
 
   const signOut = () => signOutUser();
+  const showModal = () => setIsHidden(false);
+
+  useEffect(() => {
+    setIsRegistered(true);
+    setIsHidden(true);
+  }, [currentUser]);
 
   return (
-    <main>
-      <section>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter your email"
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter your password"
-          />
-          <button type="submit">Sign In</button>
-          <button type="button" onClick={signInWithGooglePopup}>
-            Sign In with Google
-          </button>
-        </form>
-        <button type="button" onClick={signOut}>
-          Sign Out
-        </button>
-      </section>
-      <div>
-        <TaskForm />
-      </div>
-      <div>
-        <TaskList />
-      </div>
-    </main>
+    <>
+      <header className="header">
+        <div className="container">
+          <h3>Smarty.io</h3>
+          {currentUser ? (
+            <button type="button" className="blue-btn" onClick={signOut}>
+              Sign Out
+            </button>
+          ) : (
+            <button type="button" className="blue-btn" onClick={showModal}>
+              Sign In
+            </button>
+          )}
+        </div>
+      </header>
+      <main className="main">
+        {!currentUser ? (
+          <>
+            <h2>Sign in to start</h2>
+            <Modal
+              props={{ isHidden, isRegistered, setIsRegistered, setIsHidden }}
+            />
+          </>
+        ) : (
+          <>
+            <TaskForm />
+            <TaskList />
+          </>
+        )}
+      </main>
+    </>
   );
 };
 
