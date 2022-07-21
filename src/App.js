@@ -8,6 +8,8 @@ import {
   getUserTasks,
 } from "./utils/firebaseUtils";
 
+import "./App.scss";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -27,9 +29,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <>
       <HomePage />
-    </div>
+    </>
   );
 }
 

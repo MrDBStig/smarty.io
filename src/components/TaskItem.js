@@ -19,16 +19,22 @@ const TaskItem = (task) => {
   };
 
   return (
-    <li>
+    <li className={`task-list-item ${done && "done-task"}`}>
       <input
         type="checkbox"
         name="done"
         id="done"
-        onChange={handleCheckChange}
+        defaultChecked={done}
+        className="task-list-item-input"
+        onClick={handleCheckChange}
       />
-      <span>{name}</span>
-      <button type="button" onClick={handleDeleteTask}>
-        x
+      <span className={`task-list-item-name`}>{name}</span>
+      <button
+        className="task-list-item-btn red-btn"
+        type="button"
+        onClick={handleDeleteTask}
+      >
+        Delete
       </button>
     </li>
   );
