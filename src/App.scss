@@ -238,8 +238,12 @@ h6 {
   height: 100%;
   width: 100%;
   background-color: rgba($color: $color-black, $alpha: 0.5);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  @supports (
+    ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px)))
+  ) {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
   z-index: 100;
   transition: 0.5s all ease;
 }

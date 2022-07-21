@@ -23,6 +23,7 @@ const HomePage = () => {
     <>
       <header className="header">
         <div className="container">
+          <h1>Smarty.io</h1>
           {currentUser ? (
             <button type="button" className="blue-btn" onClick={signOut}>
               Sign Out
