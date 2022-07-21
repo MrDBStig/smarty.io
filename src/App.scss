@@ -1,0 +1,294 @@
+// Variables
+$color-white: #f6f6f6;
+$color-light-grey: #d6e4f0;
+$color-light-blue: #8fabd0;
+$color-dark-blue: #1e56a0;
+$color-blue-google: #4285f4;
+$color-dark-violet: #163172;
+$color-light-red: #f0d8da;
+$color-light-pink: #e0b0b6;
+$color-red: #b23a48;
+$color-dark-red: #8e2e3a;
+$color-black: #1b1c1e;
+$color-lighter-black: #303030;
+$border-radius-5: 5px;
+$border-radius-7: 7px;
+
+// Default styles
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: $color-white;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: $color-black;
+  overflow-x: hidden;
+  position: relative;
+}
+
+p {
+  font-size: 1.8rem;
+}
+
+input,
+button {
+  border: none;
+  padding: 1rem 2rem;
+}
+
+input {
+  border-radius: $border-radius-5;
+  color: $color-lighter-black;
+
+  &:focus {
+    outline-color: $color-dark-violet;
+  }
+}
+
+button {
+  font-weight: 700;
+  border-radius: $border-radius-7;
+  cursor: pointer;
+  color: $color-white;
+  transition: 0.3s all ease-out;
+}
+
+.blue-btn {
+  background: $color-dark-blue;
+
+  &:hover {
+    background: $color-dark-violet;
+  }
+}
+
+.google-btn {
+  background: $color-blue-google;
+
+  &:hover {
+    background: $color-dark-blue;
+  }
+}
+
+.red-btn {
+  background: $color-light-red;
+  color: $color-red;
+  font-weight: 400;
+
+  &:hover {
+    background: $color-light-pink;
+    color: $color-dark-red;
+  }
+}
+
+h1 {
+  font-size: 3.6rem;
+}
+
+h2 {
+  font-size: 3.2rem;
+}
+
+h3 {
+  font-size: 2.8rem;
+}
+
+h4 {
+  font-size: 2.5rem;
+}
+
+h5 {
+  font-size: 2.2rem;
+}
+
+h6 {
+  font-size: 2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  color: $color-dark-violet;
+}
+
+.container {
+  max-width: 110rem;
+  margin: 0 auto;
+}
+
+// Header
+.header {
+  padding: 2rem;
+  box-shadow: 0 0 5px 5px rgba($color: $color-lighter-black, $alpha: 0.1);
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// Main
+.main {
+  max-width: 110rem;
+  margin: 0 auto;
+  padding: 8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media screen and (max-width: 56rem) {
+    padding: 4rem 0;
+  }
+}
+
+.task-form {
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+
+  &-input {
+    flex: 1 1 75%;
+  }
+
+  &-btn {
+    flex: 1 1 25%;
+  }
+
+  @media screen and (max-width: 56rem) {
+    max-width: 30rem;
+    flex-direction: column;
+
+    &-input {
+      height: 4rem;
+    }
+  }
+}
+
+.task-list {
+  padding: 0;
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  list-style: none;
+
+  .done-task {
+    background: $color-white;
+
+    .task-list-item-name {
+      text-decoration: line-through;
+    }
+  }
+
+  &-item {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    font-size: 1.8rem;
+    border-radius: $border-radius-7;
+    background: $color-light-grey;
+    transition: 0.3s all ease;
+
+    &-input {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      height: 2rem;
+      width: 2rem;
+      background-color: $color-white;
+
+      &:checked {
+        background-color: $color-light-blue;
+      }
+    }
+
+    &-name {
+      text-overflow: ellipsis;
+    }
+
+    &-btn {
+      margin-left: auto;
+      padding: 1rem;
+    }
+  }
+}
+
+// Modal
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba($color: $color-black, $alpha: 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  transition: 0.5s all ease;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 60rem;
+  background-color: $color-white;
+  padding: 3rem;
+  border-radius: $border-radius-7;
+  z-index: 200;
+  transition: 0.5s all ease;
+
+  &-form {
+    position: relative;
+    padding: 3rem 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .toggle-paragraph {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .toggle-span {
+        padding: 1rem;
+        color: $color-dark-blue;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .times {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
