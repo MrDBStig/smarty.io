@@ -1,6 +1,20 @@
-# Getting Started with Create React App and Redux
+# SMARTY.IO | To-Do App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+
+Libraries and packages used:
+- React 18 + Hooks
+- Redux (ReduxJS Toolkit)
+- SASS
+- Firebase
+  
+Features:
+- Responsive layout for 320px+ width
+- Code is split into components
+- Authentication via Firebase
+- CRUD operations with user tasks (create, read, update and delete functionality)
+- Tasks are stored in Firestore Cloud for a certain user
+- You can mark task as done or delete it
 
 ## Available Scripts
 
